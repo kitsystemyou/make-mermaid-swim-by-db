@@ -1,21 +1,33 @@
 from sqlalchemy import create_engine, MetaData
-# from sqlalchemy.sql import text
-# import pymysql
 
-user = "root"
-password = "pass"
-host = "127.0.0.1"
-port = "3307"
-db_name = "charamane"
+user = ""
+password = ""
+host = ""
+port = ""
+db_name = ""
 
 db_uri = f"mysql://{user}:{password}@{host}:{port}/{db_name}"
 engine = create_engine(db_uri)
 meta = MetaData()
 meta.reflect(bind=engine)
-print(meta.tables.keys())
 
 
-def write_texts(lines: list):
+def main():
+    init_text()
+
+    for n, t in meta.tables.items():
+        texts: list[str] = []
+        texts.append("    " + n + "{\n")
+        print("table name🌟", n)
+        for c in t.columns.values():
+            texts.append(create_row_per_column(c))
+        texts.append("}\n")
+        write_texts(texts)
+
+    close_text()
+
+
+def write_texts(lines: list[str]):
     f = open('er.md', 'a', encoding='UTF-8')
     f.writelines(lines)
     f.close()
@@ -29,8 +41,8 @@ def close_text():
     write_texts(["```"])
 
 
-def create_row_per_column(column_data):
-    print(column_data)
+def create_row_per_column(column_data) -> str:
+    # gettable: name, type, autoincrement, default, nullable, primary_key, foreign_key, index, comment
     line = f"        {column_data.type} {column_data.name}"
     if column_data.primary_key:
         line += " PK"
@@ -42,18 +54,5 @@ def create_row_per_column(column_data):
         return line + "\n"
 
 
-init_text()
-
-for n, t in meta.tables.items():
-    texts = []
-    texts.append("    " + n + "{\n")
-    print("table name🌟", n)
-    print("record", t.c)
-    for c in t.columns.values():
-        # print(c.name, c.type, c.autoincrement, c.default, c.nullable, c.primary_key, c.index, c.comment)
-        texts.append(create_row_per_column(c))
-    texts.append("}\n")
-    print(texts)
-    write_texts(texts)
-
-close_text()
+if __name__ == "__main__":
+    main()
