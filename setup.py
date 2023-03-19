@@ -12,7 +12,7 @@ setup(
     name='DB2mermaid',  # パッケージ名(プロジェクト名)
     packages=['db2mermaid'],  # パッケージ内(プロジェクト内)のパッケージ名をリスト形式で指定
 
-    version='1.0.0',  # バージョン
+    version='1.0.2',  # バージョン
 
     license='MIT',  # ライセンス
 
@@ -26,7 +26,7 @@ setup(
     description='db -> mermaid ER code',  # パッケージの簡単な説明
     long_description=long_description,  # PyPIに'Project description'として表示されるパッケージの説明文
     long_description_content_type='text/markdown',  # long_descriptionの形式を'text/plain',  'text/x-rst',  'text/markdown'のいずれかから指定
-    keywords='gokulang goku-lang',  # PyPIでの検索用キーワードをスペース区切りで指定
+    keywords='mermaid erDiagram',  # PyPIでの検索用キーワードをスペース区切りで指定
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
