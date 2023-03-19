@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine, MetaData, schema
 
 
 class DB2Mermaid:
@@ -33,7 +33,7 @@ class DB2Mermaid:
     def _close_text(self):
         self._write_texts(["```"])
 
-    def create_row_per_column(self, column_data) -> str:
+    def create_row_per_column(self, column_data: schema.Column) -> str:
         """_summary_
 
         Args:
@@ -44,15 +44,20 @@ class DB2Mermaid:
             str: string of column data for mermaid erDiagram row
         """
 
-        line = f"        {column_data.type} {column_data.name}"
+        if "COLLATE" in str(column_data.type):
+            column_data.type = str(column_data.type).split(" ")[0]
+        if "DECIMAL" in str(column_data.type):
+            # avoid mermaid incorrect format in DECIMAL
+            column_data.type = str(column_data.type).replace(', ', '_')
+        er_row = f"        {column_data.type} {column_data.name}"
         if column_data.primary_key:
-            line += " PK"
-            return line + "\n"
+            er_row += " PK"
+            return er_row + "\n"
         elif column_data.foreign_keys:
-            line += " FK"
-            return line + "\n"
+            er_row += " FK"
+            return er_row + "\n"
         else:
-            return line + "\n"
+            return er_row + "\n"
 
     def generate(self):
         self._init_text()
