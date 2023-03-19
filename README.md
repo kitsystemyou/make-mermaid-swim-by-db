@@ -21,6 +21,8 @@ from db2mermaid.db2mermaid import DB2Mermaid
     dm.generate()
 ```
 
+then, you will get `er.md`
+
 # Caution ❗
 this package is not full.
 It cannot generate table relation, can only generate table definition 😢.
