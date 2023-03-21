@@ -23,7 +23,7 @@ from db2mermaid.db2mermaid import DB2Mermaid
 
 then, you will get `er.md`
 
-### Output Sample of Skila
+### Output Sample of Sakila
 ref: https://downloads.mysql.com/docs/sakila-db.tar.gz
 
 ![output sapmle](./images/skila-sample.png)
