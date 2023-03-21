@@ -45,6 +45,7 @@ class DB2Mermaid:
         """
 
         if "COLLATE" in str(column_data.type):
+            # avoid mermaid incorrect format in COLLATE
             column_data.type = str(column_data.type).split(" ")[0]
         if "DECIMAL" in str(column_data.type):
             # avoid mermaid incorrect format in DECIMAL
